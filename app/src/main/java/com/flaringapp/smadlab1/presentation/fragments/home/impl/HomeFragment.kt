@@ -47,7 +47,9 @@ class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract
     }
 
     private fun initViews() {
-        inputNumbers.doAfterTextChanged { numbersInputSubject.onNext(it.toString()) }
+        inputNumbers.doAfterTextChanged {
+            numbersInputSubject.onNext(it.toString())
+        }
 
         buttonAverage.setOnClickListener { presenter.onAverageClicked() }
         buttonMode.setOnClickListener { presenter.onModeClicked() }
@@ -69,8 +71,8 @@ class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract
         .onApiThread()
         .observeOnUI()
 
-    override fun setNumbersError(error: Int) {
-        layoutNumbersInput.error = getString(error)
+    override fun setNumbersError(error: Int?) {
+        layoutNumbersInput.error = error?.let { getString(it) }
     }
 
     override fun setResult(result: Double) {

@@ -25,7 +25,10 @@ class HomePresenter(
     override fun onStart() {
         super.onStart()
         numbersInputDisposable = view!!.numbersInputObservable
-            .subscribe { numbers = it }
+            .subscribe {
+                numbers = it
+                view?.setNumbersError(null)
+            }
     }
 
     override fun release() {

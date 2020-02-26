@@ -9,7 +9,7 @@ interface HomeContract {
     interface ViewContract: IBaseFragment {
         val numbersInputObservable: Observable<String>
 
-        fun setNumbersError(error: Int)
+        fun setNumbersError(error: Int?)
 
         fun setResult(result: Double)
     }
