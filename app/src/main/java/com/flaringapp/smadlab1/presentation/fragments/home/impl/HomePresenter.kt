@@ -1,5 +1,6 @@
 package com.flaringapp.smadlab1.presentation.fragments.home.impl
 
+import androidx.core.text.isDigitsOnly
 import com.flaringapp.smadlab1.R
 import com.flaringapp.smadlab1.data.calculatior.CharacteristicsCalculator
 import com.flaringapp.smadlab1.presentation.fragments.home.HomeContract
@@ -11,7 +12,7 @@ private typealias Calculation = (DoubleArray) -> Single<Double>
 
 class HomePresenter(
     private val calculator: CharacteristicsCalculator
-): BasePresenter<HomeContract.ViewContract>(), HomeContract.PresenterContract {
+) : BasePresenter<HomeContract.ViewContract>(), HomeContract.PresenterContract {
 
     companion object {
         private const val SPACE = " "
@@ -21,6 +22,8 @@ class HomePresenter(
 
     private var numbersInputDisposable: Disposable? = null
     private var calculationRequest: Disposable? = null
+
+    private var pendingNumberInputAction: ((Int) -> Unit)? = null
 
     override fun onStart() {
         super.onStart()
@@ -81,11 +84,22 @@ class HomePresenter(
     }
 
     override fun onStartingPointClicked() {
-        calculateWithUiResult { calculator.startingPoint(4, *it) }
+        pendingNumberInputAction = { power ->
+            calculateWithUiResult { calculator.startingPoint(power, *it) }
+        }
+        view?.openNumberInputDialog()
     }
 
     override fun onCentralPointClicked() {
-        calculateWithUiResult { calculator.centralPoint(4, *it) }
+        pendingNumberInputAction = { power ->
+            calculateWithUiResult { calculator.centralPoint(power, *it) }
+        }
+        view?.openNumberInputDialog()
+    }
+
+    override fun onInput(input: String) {
+        if (!input.isDigitsOnly()) return
+        pendingNumberInputAction?.invoke(input.toInt())
     }
 
     private fun calculateWithUiResult(calculation: Calculation) {

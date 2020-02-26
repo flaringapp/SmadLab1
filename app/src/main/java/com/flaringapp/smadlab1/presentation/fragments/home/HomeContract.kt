@@ -11,6 +11,8 @@ interface HomeContract {
 
         fun setNumbersError(error: Int?)
 
+        fun openNumberInputDialog()
+
         fun setResult(result: Double)
     }
 
@@ -28,6 +30,8 @@ interface HomeContract {
         fun onKurtosisClicked()
         fun onStartingPointClicked()
         fun onCentralPointClicked()
+
+        fun onInput(input: String)
     }
 
 }

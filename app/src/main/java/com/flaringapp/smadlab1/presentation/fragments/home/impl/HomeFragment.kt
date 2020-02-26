@@ -8,6 +8,9 @@ import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.app.utils.observeOnUI
 import com.flaringapp.app.utils.onApiThread
 import com.flaringapp.smadlab1.R
+import com.flaringapp.smadlab1.presentation.dialogs.input.InputContract
+import com.flaringapp.smadlab1.presentation.dialogs.input.enums.DialogInputType
+import com.flaringapp.smadlab1.presentation.dialogs.input.impl.InputDialog
 import com.flaringapp.smadlab1.presentation.fragments.home.HomeContract
 import com.flaringapp.smadlab1.presentation.mvp.BaseFragment
 import io.reactivex.Observable
@@ -17,10 +20,13 @@ import org.koin.androidx.scope.currentScope
 import java.text.DecimalFormat
 
 
-class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract.ViewContract {
+class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract.ViewContract,
+    InputContract.InputDialogParent {
 
     companion object {
         private val resultFormat: DecimalFormat = DecimalFormat("0.0000")
+
+        private const val NUMBER_INPUT_DIALOG = "dialog_number_input"
 
         fun newInstance(): HomeFragment {
             return HomeFragment()
@@ -75,7 +81,23 @@ class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract
         layoutNumbersInput.error = error?.let { getString(it) }
     }
 
+    override fun openNumberInputDialog() {
+        InputDialog.newInstance(
+            header = getString(R.string.input_power),
+            minLength = 1,
+            maxLength = 1,
+            inputType = DialogInputType.NUMBER,
+            notEmpty = true
+        ).show(childFragmentManager, NUMBER_INPUT_DIALOG)
+    }
+
     override fun setResult(result: Double) {
         textResult.text = resultFormat.format(result)
+    }
+
+    override fun onInput(tag: String?, input: String) {
+        when (tag) {
+            NUMBER_INPUT_DIALOG -> presenter.onInput(input)
+        }
     }
 }

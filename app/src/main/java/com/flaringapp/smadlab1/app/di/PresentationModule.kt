@@ -3,6 +3,8 @@ package com.flaringapp.smadlab1.app.di
 import com.flaringapp.smadlab1.presentation.activities.MainContract
 import com.flaringapp.smadlab1.presentation.activities.impl.MainActivity
 import com.flaringapp.smadlab1.presentation.activities.impl.MainPresenter
+import com.flaringapp.smadlab1.presentation.dialogs.input.InputContract
+import com.flaringapp.smadlab1.presentation.dialogs.input.impl.InputPresenter
 import com.flaringapp.smadlab1.presentation.fragments.home.HomeContract
 import com.flaringapp.smadlab1.presentation.fragments.home.impl.HomeFragment
 import com.flaringapp.smadlab1.presentation.fragments.home.impl.HomePresenter
@@ -23,4 +25,7 @@ val presentationModule = module {
         scoped { HomePresenter(get()) as HomeContract.PresenterContract }
     }
 
+    //Dialogs
+
+    factory { InputPresenter() as InputContract.PresenterContract }
 }

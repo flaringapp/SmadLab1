@@ -15,4 +15,8 @@
     <string name="starting_point">Starting point</string>
     <string name="central_point">Central point</string>
     <string name="error_invalid_input">Invalid numbers input</string>
+    <string name="input_too_short">Input too short</string>
+    <string name="input_power">Input power</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

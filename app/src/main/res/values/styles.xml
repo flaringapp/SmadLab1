@@ -35,6 +35,13 @@
         <item name="android:textSize">@dimen/titleDialogTextSize</item>
     </style>
 
+    <style name="Text.DialogMessage" parent="Text.DialogTitle">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textSize">@dimen/messageDialogTextSize</item>
+    </style>
+
     <style name="Button">
         <item name="android:background">@drawable/bg_button</item>
         <item name="android:foreground">@drawable/ripple_rounded_full</item>
@@ -77,4 +84,11 @@
         <item name="android:foreground">@drawable/ripple_rounded</item>
     </style>
 
+    <style name="Input" />
+
+    <style name="Input.ColorPrimary">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/color_primary_opaque</item>
+    </style>
 </resources>

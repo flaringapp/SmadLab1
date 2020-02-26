@@ -3,6 +3,7 @@ package com.flaringapp.app.utils
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue
@@ -10,6 +11,8 @@ import android.view.View
 import android.view.View.*
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 import com.flaringapp.app.utils.ViewUtils.animateHide
 import com.flaringapp.app.utils.ViewUtils.animateShow
 import com.flaringapp.smadlab1.app.Constants.ANIM_DURATION
@@ -93,4 +96,56 @@ fun Resources.dp(dp: Float): Float {
 
 fun Resources.dp(dp: Int): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), displayMetrics)
+}
+
+fun hideKeyboard(activity: Activity?) {
+    if (activity == null) return
+    val view = activity.currentFocus
+    if (view != null) {
+        val imm =
+            activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}
+
+fun Fragment.hideKeyboard() {
+    view?.windowToken?.let {
+        (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+            ?.hideSoftInputFromWindow(it, 0)
+    }
+}
+
+fun Activity.showKeyboard() {
+    if (currentFocus != null) {
+        val imm =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(currentFocus, 0)
+    }
+}
+
+fun Fragment.showKeyboard() {
+    activity?.showKeyboard()
+}
+
+fun Context.toggleKeyboard() {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+}
+
+fun View.setVisible(isVisible: Boolean, gone: Boolean = true) {
+    if (isVisible) show()
+    else hide(gone)
+}
+
+fun View.show() {
+    visibility = VISIBLE
+}
+
+fun View.hide(gone: Boolean = false) {
+    if (gone) gone()
+    else visibility = INVISIBLE
+}
+
+fun View.gone() {
+    visibility = GONE
 }

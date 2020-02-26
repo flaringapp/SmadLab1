@@ -16,6 +16,9 @@ abstract class BaseDialog<T : IBasePresenter<*>> : DialogFragment(), IBaseDialog
 
     override val viewContext: Context? get() = context
 
+    override val dialogTag: String?
+        get() = super.getTag()
+
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,5 +61,9 @@ abstract class BaseDialog<T : IBasePresenter<*>> : DialogFragment(), IBaseDialog
     override fun onDestroyView() {
         presenter.release()
         super.onDestroyView()
+    }
+
+    override fun close() {
+        dismiss()
     }
 }
