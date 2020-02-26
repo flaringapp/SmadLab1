@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Base</string>
+    <string name="app_name">SmadLab1</string>
     <string name="enter_numbers">Enter numbers of your set here</string>
     <string name="average">Average</string>
     <string name="mode">Mode</string>
