@@ -9,6 +9,8 @@ interface HomeContract {
     interface ViewContract: IBaseFragment {
         val numbersInputObservable: Observable<String>
 
+        fun initInput(input: String)
+
         fun setNumbersError(error: Int?)
 
         fun openNumberInputDialog()

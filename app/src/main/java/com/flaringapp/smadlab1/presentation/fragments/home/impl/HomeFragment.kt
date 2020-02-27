@@ -77,6 +77,10 @@ class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract
         .onApiThread()
         .observeOnUI()
 
+    override fun initInput(input: String) {
+        inputNumbers.setText(input)
+    }
+
     override fun setNumbersError(error: Int?) {
         layoutNumbersInput.error = error?.let { getString(it) }
     }
@@ -92,7 +96,7 @@ class HomeFragment: BaseFragment<HomeContract.PresenterContract>(), HomeContract
     }
 
     override fun setResult(result: Double) {
-        textResult.text = resultFormat.format(result)
+        textResult.animateText(resultFormat.format(result))
     }
 
     override fun onInput(tag: String?, input: String) {

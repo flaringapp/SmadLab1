@@ -16,6 +16,8 @@ class HomePresenter(
 
     companion object {
         private const val SPACE = " "
+
+        private val DEFINED_NUMBERS = arrayOf(0.65, 0.79, 0.57, 0.34, 0.25, 0.00)
     }
 
     private var numbers: String = ""
@@ -27,11 +29,14 @@ class HomePresenter(
 
     override fun onStart() {
         super.onStart()
+
         numbersInputDisposable = view!!.numbersInputObservable
             .subscribe {
                 numbers = it
                 view?.setNumbersError(null)
             }
+
+        view?.initInput(DEFINED_NUMBERS.joinToString(separator = " "))
     }
 
     override fun release() {
