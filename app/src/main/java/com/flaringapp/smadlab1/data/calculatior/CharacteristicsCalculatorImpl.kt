@@ -24,11 +24,13 @@ class CharacteristicsCalculatorImpl : CharacteristicsCalculator {
     }
 
     override fun median(vararg numbers: Double) = rxCalculation {
-        if (numbers.size % 2 == 0) {
-            val middle = numbers.size / 2
-            (numbers[middle - 1] + numbers[middle]) / 2
-        } else {
-            numbers[(numbers.size - 1) / 2]
+        numbers.sorted().let {
+            if (it.size % 2 == 0) {
+                val middle = it.size / 2
+                (it[middle - 1] + it[middle]) / 2
+            } else {
+                it[(it.size - 1) / 2]
+            }
         }
     }
 
@@ -61,7 +63,7 @@ class CharacteristicsCalculatorImpl : CharacteristicsCalculator {
         }
 
     override fun variation(vararg numbers: Double) = Single.zip(
-        meanSquareDeviation(*numbers),
+        correctedMeanSquareDeviation(*numbers),
         averageEmpirical(*numbers),
         BiFunction<Double, Double, Double> { meanSquareDeviation, average ->
             meanSquareDeviation / average
@@ -69,35 +71,42 @@ class CharacteristicsCalculatorImpl : CharacteristicsCalculator {
     )
 
     override fun asymmetry(vararg numbers: Double) = Single.zip(
-        averageEmpirical(*numbers),
+        centralPoint(3, *numbers),
         meanSquareDeviation(*numbers),
-        BiFunction<Double, Double, Double> { average, meanSquareDeviation ->
-            numbers.map {
-                (it - average).pow(3)
-            }.sum() / (meanSquareDeviation.pow(3) * numbers.size)
+        BiFunction<Double, Double, Double> { centralPoint, meanSquareDeviation ->
+            centralPoint / meanSquareDeviation.pow(3)
         }
     )
 
     override fun kurtosis(vararg numbers: Double) = Single.zip(
-        averageEmpirical(*numbers),
+        centralPoint(4, *numbers),
         meanSquareDeviation(*numbers),
-        BiFunction<Double, Double, Double> { average, meanSquareDeviation ->
-            numbers.map {
-                (it - average).pow(4)
-            }.sum() / (meanSquareDeviation.pow(4) * numbers.size)
+        BiFunction<Double, Double, Double> { centralPoint, meanSquareDeviation ->
+            (centralPoint / meanSquareDeviation.pow(4)) - 3
         }
-    ).map {
-        it - 3
-    }
+    )
 
     override fun startingPoint(power: Int, vararg numbers: Double) = rxCalculation {
-        numbers.map { it.pow(power) }.sum()
+        var result = 0.0
+        numbers.groupBy { it }
+            .mapValues { it.value.size }.let {
+                for (model in it) {
+                    result += model.key.pow(power) * model.value
+                }
+            }
+        result / numbers.size
     }
 
     override fun centralPoint(power: Int, vararg numbers: Double) = averageEmpirical(*numbers)
         .map { average ->
-            numbers.map { (it - average).pow(power) }
-                .sum()
+            var result = 0.0
+            numbers.groupBy { it }
+                .mapValues { it.value.size }.let {
+                    for (model in it) {
+                        result += (model.key - average).pow(power) * model.value
+                    }
+                }
+            result / numbers.size
         }
 
     private fun <T> rxCalculation(algorithm: Algorithm<T>): Single<T> {
