@@ -17,7 +17,7 @@ class HomePresenter(
     companion object {
         private const val SPACE = " "
 
-        private const val DEFINED_INPUT = "0.65, 0.79, 0.57, 0.34, 0.25, 0.00"
+        private const val DEFINED_INPUT = "0.65 0.79 0.57 0.34 0.25 0.00"
     }
 
     private var numbers: String = ""
@@ -131,7 +131,10 @@ class HomePresenter(
     private fun validateNumbers(): Boolean {
         if (numbers.trim().isEmpty()) return false
 
-        if (numbers.trim().split(SPACE).isEmpty()) return false
+        val numbersSplit = numbers.trim().split(SPACE)
+
+        if (numbersSplit.isEmpty()) return false
+        if (numbersSplit.find { !it.isDigitsOnly() } != null) return false
 
         return true
     }
