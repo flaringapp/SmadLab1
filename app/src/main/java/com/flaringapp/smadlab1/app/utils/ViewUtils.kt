@@ -1,4 +1,4 @@
-package com.flaringapp.app.utils
+package com.flaringapp.smadlab1.app.utils
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -13,8 +13,8 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.flaringapp.app.utils.ViewUtils.animateHide
-import com.flaringapp.app.utils.ViewUtils.animateShow
+import com.flaringapp.smadlab1.app.utils.ViewUtils.animateHide
+import com.flaringapp.smadlab1.app.utils.ViewUtils.animateShow
 import com.flaringapp.smadlab1.app.Constants.ANIM_DURATION
 
 

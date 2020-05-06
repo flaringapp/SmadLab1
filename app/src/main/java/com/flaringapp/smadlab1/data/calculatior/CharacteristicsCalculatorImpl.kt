@@ -1,7 +1,7 @@
 package com.flaringapp.smadlab1.data.calculatior
 
-import com.flaringapp.app.utils.observeOnUI
-import com.flaringapp.app.utils.onApiThread
+import com.flaringapp.smadlab1.app.utils.observeOnUI
+import com.flaringapp.smadlab1.app.utils.onApiThread
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import kotlin.math.pow

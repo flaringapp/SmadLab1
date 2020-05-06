@@ -15,8 +15,8 @@ import android.view.inputmethod.InputMethodManager
 import com.flaringapp.smadlab1.presentation.dialogs.input.InputContract
 import com.flaringapp.smadlab1.presentation.dialogs.input.InputContract.InputDialogParent
 import com.flaringapp.smadlab1.presentation.dialogs.input.enums.DialogInputType
-import com.flaringapp.app.utils.hideKeyboard
-import com.flaringapp.app.utils.setVisible
+import com.flaringapp.smadlab1.app.utils.hideKeyboard
+import com.flaringapp.smadlab1.app.utils.setVisible
 import com.flaringapp.smadlab1.R
 import com.flaringapp.smadlab1.presentation.mvp.BaseDialog
 import io.reactivex.Observable

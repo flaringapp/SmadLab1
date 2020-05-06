@@ -1,7 +1,7 @@
 package com.flaringapp.smadlab1.presentation.fragments.home.impl
 
-import androidx.core.text.isDigitsOnly
 import com.flaringapp.smadlab1.R
+import com.flaringapp.smadlab1.app.utils.isDigitsOrDot
 import com.flaringapp.smadlab1.data.calculatior.CharacteristicsCalculator
 import com.flaringapp.smadlab1.presentation.fragments.home.HomeContract
 import com.flaringapp.smadlab1.presentation.mvp.BasePresenter
@@ -103,7 +103,7 @@ class HomePresenter(
     }
 
     override fun onInput(input: String) {
-        if (!input.isDigitsOnly()) return
+        if (!input.isDigitsOrDot()) return
         pendingNumberInputAction?.invoke(input.toInt())
     }
 
@@ -134,7 +134,7 @@ class HomePresenter(
         val numbersSplit = numbers.trim().split(SPACE)
 
         if (numbersSplit.isEmpty()) return false
-        if (numbersSplit.find { !it.isDigitsOnly() } != null) return false
+        if (numbersSplit.find { !it.isDigitsOrDot() } != null) return false
 
         return true
     }

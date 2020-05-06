@@ -1,4 +1,4 @@
-package com.flaringapp.app.utils
+package com.flaringapp.smadlab1.app.utils
 
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers

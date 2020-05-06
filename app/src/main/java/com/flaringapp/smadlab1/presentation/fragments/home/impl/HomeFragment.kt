@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
-import com.flaringapp.app.utils.observeOnUI
-import com.flaringapp.app.utils.onApiThread
+import com.flaringapp.smadlab1.app.utils.observeOnUI
+import com.flaringapp.smadlab1.app.utils.onApiThread
 import com.flaringapp.smadlab1.R
 import com.flaringapp.smadlab1.presentation.dialogs.input.InputContract
 import com.flaringapp.smadlab1.presentation.dialogs.input.enums.DialogInputType
